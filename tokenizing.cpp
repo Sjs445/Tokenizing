@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstring>
 
 using namespace std;
 
@@ -9,6 +10,7 @@ void tokenize(char[]);
 bool isIdentifier(char[]);
 bool isReserved(char[]);
 string isSpecial(char[]);
+string isSemiColon(char[]);
 bool isInt(char[]);
 bool isReal(char[]);
 
@@ -37,6 +39,8 @@ void readData(char input[])
 void tokenize(char input[])
 {
     cout<<isSpecial(input);
+    cout<<isSemiColon(input);
+    
     char * args;
 
     args=strtok(input, " =,;");
@@ -141,11 +145,21 @@ string isSpecial(char input[])
     {
         if(input[i]==',')
         {
-            return(",\tSPECIAL CHARACTER\n");
+            return ",\tSPECIAL CHARACTER\n";
         }
-        else if(input[i]==';')
+        i++;
+    }
+    return "";
+}
+
+string isSemiColon(char input[])
+{
+    int i=0;
+    while(input[i])
+    {
+        if(input[i]==';')
         {
-            return(";\tSPECIAL CHARACTER\n");
+            return ";\tSPECIAL CHARACTER\n";
         }
         i++;
     }
