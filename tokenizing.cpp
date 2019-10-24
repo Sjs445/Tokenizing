@@ -8,7 +8,7 @@ void readData(char[]);
 void tokenize(char[]);
 bool isIdentifier(char[]);
 bool isReserved(char[]);
-bool isSpecial(char[]);
+string isSpecial(char[]);
 bool isInt(char[]);
 bool isReal(char[]);
 
@@ -17,7 +17,6 @@ int main()
     char input[100]="";
     readData(input);
     tokenize(input);
-//    char input[]="123.44";
 
     return 0;
 }
@@ -37,9 +36,10 @@ void readData(char input[])
 
 void tokenize(char input[])
 {
+    cout<<isSpecial(input);
     char * args;
 
-    args=strtok(input, " ,=;");
+    args=strtok(input, " =,;");
 
     while(args!=NULL)
     {
@@ -59,17 +59,12 @@ void tokenize(char input[])
         {
             cout<<args<<"\tREAL NUMBER\n";
         }
-        else if(isSpecial(args))
-        {
-            cout<<args<<"\tSPECIAL CHARACTER\n";
-        }
         else
         {
             cout<<args<<"\tINVALID TOKEN\n";
         }
         
-        
-        args=strtok(NULL, " ,=;");
+        args=strtok(NULL, " =,;");
     }
 }
 
@@ -139,19 +134,20 @@ bool isReal(char input[])
     return false;
 }
 
-bool isSpecial(char input[])
+string isSpecial(char input[])
 {
     int i=0;
-    if(input[i]==',')
+    while(input[i])
     {
-        return true;
+        if(input[i]==',')
+        {
+            return(",\tSPECIAL CHARACTER\n");
+        }
+        else if(input[i]==';')
+        {
+            return(";\tSPECIAL CHARACTER\n");
+        }
+        i++;
     }
-    else if(input[i]==';')
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return "";
 }
